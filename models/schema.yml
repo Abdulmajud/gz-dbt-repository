@@ -2,25 +2,64 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
+    description: data about product ,sales and ships of a store
     tables:
       - name: product
         identifier: raw_gz_product
+        description: products asic informations
         columns:
-          - name: products_id
-            tests:
-              - not_null
-              - unique
+           - name: products_id
+             tests:
+             - not_null
+             - unique
+             description: its the products_id
+           - name: purchse_price
+             description: the purchse price
       - name: sales
         identifier: raw_gz_sales
+        description: Detailed data about each sale
         columns:
           - name: date_date
-            tests:
-              - unique:
-                  column_name: "(orders_id || '-' || pdt_id)"
+            description: date of every sales
+          - name: pdt_id
+            description: the product id
+          - name: revenue
+            description: its revenue for each sale
+          - name: quantity
+            description: the quantity of each product
+        tests:
+          - unique:
+              column_name: “(orders_id || ‘-’ || pdt_id )”
       - name: ship
         identifier: raw_gz_ship
+        description: Shipping data
         columns:
-          - name: orders_id
-            tests:
-              - unique
-              - not_null
+        - name: orders_id
+          description: the ids of each order
+        - name: shipping_fee
+          description: the cost of shipping for various items
+        - name: logcost
+          description: the cost of Logistics
+        - name: ship_cost
+          description:  overall expenses incurred by the business for shipping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
