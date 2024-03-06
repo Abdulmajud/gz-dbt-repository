@@ -2,42 +2,44 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
-    tables: 
+    description: greenweez raw data source
+    tables:
       - name: sales
         identifier: raw_gz_sales
-        description: sales of greenweez / we have one row per productid found in each order_id
+        description: sales of greenweez / we have one row per products id found in each orders id.
         columns:
-           - name: date_date
-             description: its the date of purchase
-           - name: order_id
-             description: foreign key to ship
-           - name: pdt_id
-             description: foreign key to product
-           - name: revenue
-             description: the amount paid by customer to purchase the product, revenue = quantity * selliing_price
-           - name: quantity
-             description: the quantity of products purchased for this order
-
+          - name: date_date
+          - name: orders_id
+          - name: pdt_id
+          - name: revenue
+          - name: quantity
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
       - name: product
         identifier: raw_gz_product
-        description: products of greenweez
+        description: products of greenweez / save products with the price.
         columns:
-          - name: product_id
-            description: primary key of the table
+          - name: products_id
+            description: Primary key of the table.
+            tests:
+              - unique
+              - not_null
           - name: purchase_price
-            description: the purchase price of the product
-          
-     
+            description: price of the product.
       - name: ship
         identifier: raw_gz_ship
-        description: ship of Greenweez
+        description: ship of greenweez / dates of the sales and the products purchased with the revenue and number of products.
         columns:
-        - name: orders_id
-          description: primary key of the table
-        - name: shipping_fee
-          description: the price the customer pays for shipping
-        - name: log_cost
-          description: the cost of preparing the parcel in the warehouse
-        - name: ship_cost
-          description: the shipping cost paid by greenweez to the carrier/transporter
+          - name: orders_id
+            description:  primary key
+            tests:
+              - unique
+              - not_null
+
+
+
+
+
+
 
