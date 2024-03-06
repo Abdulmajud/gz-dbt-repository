@@ -2,64 +2,42 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
-    description: data about product ,sales and ships of a store
-    tables:
-      - name: product
-        identifier: raw_gz_product
-        description: products asic informations
-        columns:
-           - name: products_id
-             tests:
-             - not_null
-             - unique
-             description: its the products_id
-           - name: purchse_price
-             description: the purchse price
+    tables: 
       - name: sales
         identifier: raw_gz_sales
-        description: Detailed data about each sale
+        description: sales of greenweez / we have one row per productid found in each order_id
         columns:
-          - name: date_date
-            description: date of every sales
-          - name: pdt_id
-            description: the product id
-          - name: revenue
-            description: its revenue for each sale
-          - name: quantity
-            description: the quantity of each product
-        tests:
-          - unique:
-              column_name: “(orders_id || ‘-’ || pdt_id )”
+           - name: date_date
+             description: its the date of purchase
+           - name: order_id
+             description: foreign key to ship
+           - name: pdt_id
+             description: foreign key to product
+           - name: revenue
+             description: the amount paid by customer to purchase the product, revenue = quantity * selliing_price
+           - name: quantity
+             description: the quantity of products purchased for this order
+
+      - name: product
+        identifier: raw_gz_product
+        description: products of greenweez
+        columns:
+          - name: product_id
+            description: primary key of the table
+          - name: purchase_price
+            description: the purchase price of the product
+          
+     
       - name: ship
         identifier: raw_gz_ship
-        description: Shipping data
+        description: ship of Greenweez
         columns:
         - name: orders_id
-          description: the ids of each order
+          description: primary key of the table
         - name: shipping_fee
-          description: the cost of shipping for various items
-        - name: logcost
-          description: the cost of Logistics
+          description: the price the customer pays for shipping
+        - name: log_cost
+          description: the cost of preparing the parcel in the warehouse
         - name: ship_cost
-          description:  overall expenses incurred by the business for shipping
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          description: the shipping cost paid by greenweez to the carrier/transporter
 
