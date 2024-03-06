@@ -2,40 +2,58 @@ version: 2
 sources:
   - name: raw
     schema: gz_raw_data
-    description: greenweez raw data source
+    description: Hello raw data
     tables:
       - name: sales
         identifier: raw_gz_sales
-        description: sales of greenweez / we have one row per products id found in each orders id.
-        columns:
-          - name: date_date
-          - name: orders_id
-          - name: pdt_id
-          - name: revenue
-          - name: quantity
-        tests:
-          - unique:
-              column_name: "(orders_id || '-' || pdt_id)"
+        description: Hi sales
       - name: product
         identifier: raw_gz_product
-        description: products of greenweez / save products with the price.
+        description: Hi product
         columns:
-          - name: products_id
-            description: Primary key of the table.
-            tests:
-              - unique
-              - not_null
-          - name: purchase_price
-            description: price of the product.
+           - name: products_id
+             tests:
+             - unique
+             - not_null
       - name: ship
         identifier: raw_gz_ship
-        description: ship of greenweez / dates of the sales and the products purchased with the revenue and number of products.
-        columns:
-          - name: orders_id
-            description:  primary key
-            tests:
-              - unique
-              - not_null
+        description: Hi ship
+      - name: adwords
+        identifier: raw_gz_adwords
+        tests:
+          - unique:
+              column_name: "campaign_key || '-' || date_date"
+      - name: bing
+        identifier: raw_gz_bing
+        tests:
+          - unique:
+              column_name: "campaign_key || '-' || date_date"
+      - name: criteo
+        identifier: raw_gz_criteo
+        tests:
+          - unique:
+              column_name: "campaign_key || '-' || date_date"
+      - name: facebook
+        identifier: raw_gz_facebook
+        tests:
+          - unique:
+              column_name: "campaign_key || '-' || date_date"
+      - name: int_camp
+        identifier: int_campign
+      - name: fin_camp_day
+        identifier: finance_campigns_day
+      - name: int_camps_day
+        identifier: int_campaings_day
+
+      - name: int_campaigns
+        description: data from all campaigns
+    tests:
+      - unique:
+          column_name: "(campaign_key || '-' || date_date)"
+      - not_null:
+          column_name:
+            - paid_source
+            - campaign_name 
 
 
 
